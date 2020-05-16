@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 
-const allInstruments = require("../data/instruments.json");
+const allInstruments = require("../../data/instruments.json");
 const { url, instrumentsCollectionName } = require("./consts");
 
 let client = null;
@@ -11,7 +11,7 @@ const connect = async () => {
     db = client.db(process.env.DB_NAME);
   }
 
-  return db
+  return db;
 };
 
 const close = async () => {

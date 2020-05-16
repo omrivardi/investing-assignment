@@ -4,8 +4,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require('path');
 
-const { connect, initDb } = require("./db");
-const router = require("./router");
+const { connect, initDb } = require("./app/db");
+const router = require("./app/router");
 
 (async () => {
   await connect();

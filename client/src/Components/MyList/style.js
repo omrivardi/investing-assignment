@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Input } from "antd";
 
 export const InstrumentList = styled.div`
   width: 40vw;
@@ -13,4 +14,8 @@ export const Col = styled.div`
   flex: ${(props) => props.size};
   font-weight: 800;
   margin-bottom: 1em;
+`;
+
+export const Search = styled(Input.Search)`
+  margin-bottom: 2em;
 `;

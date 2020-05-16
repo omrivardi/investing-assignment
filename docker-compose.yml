@@ -1,8 +1,25 @@
-version: '3'
+version: "3"
 services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_PORT: "${APP_PORT}"
+    environment:
+      APP_PORT: "${APP_PORT}"
+      DB_URL: "${DB_URL}"
+      DB_USER: "${DB_USER}"
+      DB_PASSROWD: "${DB_PASSROWD}"
+      DB_PORT: "${DB_PORT}"
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    links:
+      - db
   db:
     image: mongo:latest
-    container_name: investing-mongo
+    container_name: db
     environment:
       MONGO_INITDB_DATABASE: "${DB_NAME}"
       MONGO_INITDB_ROOT_USERNAME: "${DB_USER}"

@@ -1,9 +1,22 @@
 const express = require("express");
-const { ObjectId } = require("mongodb");
 const { connect } = require("./db");
 const { instrumentsCollectionName, listCollectionName } = require("./consts");
 
 const router = express.Router();
+
+const checkForKeys = (obj, keys) => {
+  let valid = true;
+  if (!obj || typeof obj !== "object") {
+    return false;
+  }
+  keys.forEach((key) => {
+    if (obj[key] === undefined) {
+      valid = false;
+    }
+  });
+
+  return valid;
+};
 
 router.get("/instruments", async (req, res) => {
   const db = await connect();
@@ -22,16 +35,16 @@ router.get("/list", async (req, res) => {
 
 router.post("/list", async (req, res) => {
   const db = await connect();
+  if (!checkForKeys(req.body, ["_id", "name", "symbol", "instrumentType"])) {
+    res.status(400).send("Bad Request");
+  }
   try {
-    // let item = { ...req.body, _id: ObjectId(req.body.) };
-    // item._id = ObjectId(item._id);
     const insertResult = await db
       .collection(listCollectionName)
       .insertOne(req.body);
     if (insertResult.insertedCount === 1) {
       res.send("ok");
     } else {
-      //TODO
       res.status(500).send();
     }
   } catch (err) {
@@ -45,10 +58,14 @@ router.post("/list", async (req, res) => {
 
 router.delete("/list/:id", async (req, res) => {
   const db = await connect();
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).send("Bad Request");
+  }
   try {
     const deleteResult = await db
       .collection(listCollectionName)
-      .deleteOne({ _id: parseInt(req.params.id) });
+      .deleteOne({ _id: parseInt(id) });
 
     if (deleteResult.deletedCount === 1) {
       res.status(200).send("ok");
