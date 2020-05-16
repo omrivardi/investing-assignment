@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: mongo:latest
+    container_name: investing-mongo
+    environment:
+      MONGO_INITDB_DATABASE: "${DB_NAME}"
+      MONGO_INITDB_ROOT_USERNAME: "${DB_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${DB_PASSROWD}"
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
