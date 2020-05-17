@@ -14,7 +14,7 @@ const connect = async () => {
   return db;
 };
 
-const close = async () => {
+const close = () => {
   if (client) {
     return client.close();
   }
