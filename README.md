@@ -6,4 +6,4 @@ Run the app using docker-compose
 docker-compose up
 ```
 
-The app will be accessable ar <http://localhost:4000>
+The app will be accessable at <http://localhost:4000>
